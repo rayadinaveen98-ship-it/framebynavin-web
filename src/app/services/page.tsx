@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { services } from "@/content/site";
+import { standingNavinDataUri } from "@/content/navin-standing";
 import styles from "../editorial-subpage.module.css";
 import portraitStyles from "./services-portrait.module.css";
 
@@ -34,11 +35,12 @@ export default function ServicesPage() {
           <div className={portraitStyles.figure} aria-label="Illustrated portrait of Navin">
             <span className={portraitStyles.figureLabel} aria-hidden="true">COLLABORATE</span>
             <Image
-              src="/brand/navin-standing.webp"
+              src={standingNavinDataUri}
               alt="Illustrated portrait of Navin standing with folded arms"
-              width={323}
-              height={520}
+              width={240}
+              height={360}
               priority
+              unoptimized
             />
             <span className={portraitStyles.badge}>Selected projects</span>
           </div>
