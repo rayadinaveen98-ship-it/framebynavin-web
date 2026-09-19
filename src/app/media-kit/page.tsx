@@ -7,6 +7,7 @@ import styles from "../subpage.module.css";
 export const metadata: Metadata = {
   title: "Media Kit",
   description: "FrameByNavin audience proof, selected work and collaboration formats for partners.",
+  alternates: { canonical: "/media-kit" },
 };
 
 const categories = ["Cinema analysis", "Scene breakdowns", "Short-form film content", "Visual storytelling"] as const;
