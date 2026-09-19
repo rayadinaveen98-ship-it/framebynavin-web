@@ -114,7 +114,7 @@ npm run build
 
 ## Current status — 2026-09-19
 
-**V1 is implemented, linked to Vercel, and in final production-launch QA.**
+**V1 is implemented, linked to Vercel, and production-launch capable with a zero-cost configuration.**
 
 Implemented: responsive multi-route UI, desktop/mobile navigation, media kit, structured project intake, zero-cost Gmail contact flow, SEO metadata and structured data, social sharing assets, search metadata endpoints, security headers, branded 404, Vercel Next.js configuration, and automated visual QA.
 
