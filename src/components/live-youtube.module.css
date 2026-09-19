@@ -1,0 +1,234 @@
+.shell {
+  min-width: 0;
+}
+
+.stage,
+.loadingFrame {
+  position: relative;
+  min-height: 560px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #0d0f11;
+}
+
+.loadingFrame {
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(110deg, transparent 28%, rgba(255,255,255,.035) 42%, transparent 56%),
+    linear-gradient(155deg, #15191b, #090a0b 72%);
+  background-size: 220% 100%, auto;
+  animation: mediaLoading 1.8s linear infinite;
+}
+
+.loadingFrame span {
+  color: var(--muted-2);
+  font-size: 9px;
+  letter-spacing: .18em;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.025);
+  transition: opacity .7s ease, transform 6.8s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3,4,5,.18), rgba(3,4,5,.04) 40%, rgba(3,4,5,.86) 100%),
+    linear-gradient(90deg, rgba(3,4,5,.5), transparent 58%);
+}
+
+.platform,
+.slideCopy,
+.controls {
+  position: relative;
+  z-index: 2;
+}
+
+.platform {
+  align-self: flex-start;
+  padding: 8px 10px;
+  background: rgba(8,9,10,.75);
+  backdrop-filter: blur(12px);
+  color: #f3f4f5;
+  font-size: 9px;
+  letter-spacing: .14em;
+}
+
+.slideCopy {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  padding-right: 100px;
+}
+
+.slideCopy strong {
+  font-size: clamp(28px, 3.2vw, 54px);
+  line-height: .98;
+  letter-spacing: -.04em;
+  text-wrap: balance;
+}
+
+.slideCopy small {
+  margin-top: 14px;
+  color: rgba(255,255,255,.74);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.controls {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: grid;
+  grid-template-columns: 38px auto 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  background: rgba(8,9,10,.78);
+  backdrop-filter: blur(14px);
+}
+
+.controls button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.controls button:hover,
+.controls button:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.controls span {
+  min-width: 52px;
+  text-align: center;
+  color: rgba(255,255,255,.72);
+  font-size: 9px;
+  letter-spacing: .1em;
+}
+
+.latestStrip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-top: 0;
+}
+
+.latestStrip button {
+  min-width: 0;
+  min-height: 86px;
+  padding: 14px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: #0b0d0e;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+
+.latestStrip button:last-child {
+  border-right: 0;
+}
+
+.latestStrip button span:first-child {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--muted-2);
+  font-size: 8px;
+  letter-spacing: .12em;
+}
+
+.latestStrip button span:last-child {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #9fa7ac;
+  font-size: 11px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.latestStrip button.current {
+  background: #141719;
+}
+
+.latestStrip button.current span:first-child,
+.latestStrip button.current span:last-child {
+  color: var(--accent);
+}
+
+@keyframes mediaLoading {
+  to { background-position: -120% 0, 0 0; }
+}
+
+@media (max-width: 1080px) {
+  .stage,
+  .loadingFrame {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 720px) {
+  .stage,
+  .loadingFrame {
+    min-height: 420px;
+  }
+
+  .slide {
+    padding: 18px;
+  }
+
+  .slideCopy {
+    padding-right: 0;
+    padding-bottom: 62px;
+  }
+
+  .controls {
+    left: 18px;
+    right: auto;
+    bottom: 18px;
+  }
+
+  .latestStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .latestStrip button:nth-child(2) {
+    border-right: 0;
+  }
+
+  .latestStrip button:nth-child(n+3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingFrame { animation: none; }
+  .slide { transition: opacity .2s ease; transform: none; }
+}
