@@ -83,5 +83,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: visual-renders
-          path: "*-desktop.png\n*-mobile.png"
+          path: |
+            *-desktop.png
+            *-mobile.png
           if-no-files-found: error
