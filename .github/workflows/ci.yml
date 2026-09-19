@@ -49,7 +49,7 @@ jobs:
           cat /tmp/framebynavin-next.log
           exit 1
 
-      - name: Smoke test homepage
+      - name: Smoke test routes
         run: |
           grep -q "SEE THE" /tmp/homepage.html
           grep -q "FRAMEBYNAVIN" /tmp/homepage.html
@@ -57,6 +57,9 @@ jobs:
           grep -q "Stories" /tmp/homepage.html
           grep -q "Apps" /tmp/homepage.html
           grep -q "Games" /tmp/homepage.html
+          curl -fsS http://127.0.0.1:3000/contact > /tmp/contact.html
+          grep -q "START" /tmp/contact.html
+          grep -q "PROJECT INTAKE" /tmp/contact.html
 
       - name: Capture desktop and mobile renders
         run: |
@@ -64,12 +67,16 @@ jobs:
           test -n "$CHROME_BIN"
           "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,6000 --screenshot=homepage-desktop.png http://127.0.0.1:3000/
           "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,6000 --screenshot=homepage-mobile.png http://127.0.0.1:3000/
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,3000 --screenshot=contact-desktop.png http://127.0.0.1:3000/contact
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,4200 --screenshot=contact-mobile.png http://127.0.0.1:3000/contact
 
       - name: Upload visual verification
         uses: actions/upload-artifact@v4
         with:
-          name: homepage-renders
+          name: visual-renders
           path: |
             homepage-desktop.png
             homepage-mobile.png
+            contact-desktop.png
+            contact-mobile.png
           if-no-files-found: error
