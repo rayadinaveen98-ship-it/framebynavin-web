@@ -7,6 +7,7 @@ import styles from "../subpage.module.css";
 export const metadata: Metadata = {
   title: "Work",
   description: "Selected FrameByNavin cinema analysis, short-form work and developing creative projects.",
+  alternates: { canonical: "/work" },
 };
 
 export default function WorkPage() {
