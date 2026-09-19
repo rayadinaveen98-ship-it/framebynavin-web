@@ -93,6 +93,13 @@ export default function Home() {
               width={371}
               height={300}
               className={styles.creatorImage}
+              style={{
+                background: "#08090a",
+                padding: "24px",
+                border: "1px solid rgba(0,0,0,.18)",
+                boxShadow: "0 30px 70px rgba(25,17,12,.28)",
+                borderRadius: "3px",
+              }}
             />
           </div>
         </div>
