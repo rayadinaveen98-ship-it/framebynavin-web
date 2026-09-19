@@ -2,10 +2,10 @@ import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 
 const expected = [
-  [4000, "05e18e4d76cf914fe22b18bdb2399df9f2031e7c8c561214a48a04da1acb0f54"],
-  [4000, "cd68057a56bd191047b8c526a96c8f1acb6cfc7efcff230fdd47a7fef60cdf8d"],
-  [4000, "d435bf0cb4861ff1f5e2b3a44e3a34421a05e69f372186ab60f15460dfed2f5d"],
-  [3836, "b6b2238802401c0109c92acce96b47d15d885e3ea3ad38a6e2e9bd41b96e6855"],
+  [4000, "0275283c97db4bd552100127d63161d727fd610e9b98ae4b0c661f263c3936b7"],
+  [4000, "982a9813ef94eb11855952da1b12b1be37420f35c777b41cb39eb2851865e0fd"],
+  [4000, "e6c3a8331844ae6d2d961896ca67a2aab3c994ec7738ea0e80e4de60fb273e7d"],
+  [3728, "45d2e34b2f67eb9d7089d4ed7e7ccb2c99199cb325793625d85d3d742609d441"],
 ];
 
 function extract(path, name) {
@@ -33,7 +33,7 @@ const gitHash = createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes
 console.log(`full: length=${full.length} sha256=${fullHash} bytes=${bytes.length} git=${gitHash}`);
 console.log(`magic=${bytes.subarray(0, 12).toString("ascii")}`);
 
-if (full.length !== 15836 || fullHash !== "24ffc317087ba20fc073bdb7450e7bc68ebc82f467e82910a8f650a406774c0e" || bytes.length !== 11876 || gitHash !== "48cf19a56b9d2841f1a73235230c341f576e68b6" || !bytes.subarray(0, 4).equals(Buffer.from("RIFF"))) {
+if (full.length !== 15728 || fullHash !== "3acdc793f69d21de134a117d717c46f39f2b9aaf5abb7d84a0692bf44d2d8f45" || bytes.length !== 11794 || gitHash !== "62ff7c7b1573325aae1ac9a9b2368011c099da73" || !bytes.subarray(0, 4).equals(Buffer.from("RIFF"))) {
   failed = true;
 }
 
