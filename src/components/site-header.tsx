@@ -14,7 +14,7 @@ export function SiteHeader() {
       <Link className="brand" href="/" aria-label="FrameByNavin home">
         FRAMEBYNAVIN<span>●</span>
       </Link>
-      <div className="system-status"><b>● ONLINE</b> / CREATOR SYSTEM</div>
+      <div className="system-status">CINEMA · STORIES · PROJECTS</div>
       <nav className="desktop-nav" aria-label="Primary navigation">
         {links.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
       </nav>
