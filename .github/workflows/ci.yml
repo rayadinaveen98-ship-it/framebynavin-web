@@ -34,6 +34,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Verify standing portrait asset
+        run: node scripts/verify-standing-portrait.mjs
+
       - name: Build
         run: npm run build
 
