@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import styles from "./mobile-menu.module.css";
 
 const links = [
   ["Work", "#work"],
@@ -13,10 +14,10 @@ export function MobileMenu() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mobile-menu">
+    <div className={styles.root}>
       <button
         type="button"
-        className="mobile-menu-trigger"
+        className={styles.trigger}
         aria-expanded={open}
         aria-controls="mobile-menu-panel"
         onClick={() => setOpen((value) => !value)}
@@ -24,14 +25,14 @@ export function MobileMenu() {
         {open ? "CLOSE" : "MENU"}
       </button>
       {open ? (
-        <nav id="mobile-menu-panel" className="mobile-menu-panel" aria-label="Mobile navigation">
+        <div id="mobile-menu-panel" className={styles.panel} role="navigation" aria-label="Mobile navigation">
           {links.map(([label, href], index) => (
             <a key={href} href={href} onClick={() => setOpen(false)}>
               <span>0{index + 1}</span>
               {label}
             </a>
           ))}
-        </nav>
+        </div>
       ) : null}
     </div>
   );
