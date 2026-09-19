@@ -7,6 +7,7 @@ import styles from "../subpage.module.css";
 export const metadata: Metadata = {
   title: "About",
   description: "About Navin, FrameByNavin and the creator philosophy behind the work.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
