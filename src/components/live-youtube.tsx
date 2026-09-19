@@ -84,13 +84,11 @@ export function LiveYoutube() {
             aria-hidden={index !== active}
             tabIndex={index === active ? 0 : -1}
             style={{ backgroundImage: `url(${item.thumbnail})` }}
+            title={item.title}
           >
             <span className={styles.scrim} />
             <span className={styles.platform}>LATEST / YOUTUBE</span>
-            <span className={styles.slideCopy}>
-              <strong>{item.title}</strong>
-              <small>{formatDate(item.publishedAt)} · WATCH ↗</small>
-            </span>
+            <span className={styles.play} aria-hidden="true">▶</span>
           </a>
         ))}
 
@@ -115,18 +113,12 @@ export function LiveYoutube() {
         )}
       </div>
 
-      <div className={styles.latestStrip}>
-        {items.slice(0, 4).map((item, index) => (
-          <button
-            type="button"
-            key={item.id}
-            className={index === active ? styles.current : ""}
-            onClick={() => setActive(index)}
-          >
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <span>{item.title}</span>
-          </button>
-        ))}
+      <div className={styles.caption}>
+        <div>
+          <small>LATEST UPLOAD · {formatDate(activeItem.publishedAt)}</small>
+          <h2>{activeItem.title}</h2>
+        </div>
+        <a href={activeItem.url} target="_blank" rel="noreferrer">WATCH ON YOUTUBE ↗</a>
       </div>
     </div>
   );
