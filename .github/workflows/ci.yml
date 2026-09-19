@@ -72,6 +72,15 @@ jobs:
           grep -q "/work" /tmp/sitemap.xml
           grep -q "FrameByNavin" /tmp/manifest.webmanifest
           test -s /tmp/opengraph-image.png
+          grep -q 'application/ld+json' /tmp/homepage.html
+          grep -q 'https://schema.org' /tmp/homepage.html
+          grep -q 'rel="canonical"' /tmp/homepage.html
+          grep -q '/work' /tmp/work.html
+          grep -q 'rel="canonical"' /tmp/work.html
+          grep -q 'rel="canonical"' /tmp/services.html
+          grep -q 'rel="canonical"' /tmp/about.html
+          grep -q 'rel="canonical"' /tmp/media-kit.html
+          grep -q 'rel="canonical"' /tmp/contact.html
 
       - name: Verify contact intake staging contract
         run: |
