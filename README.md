@@ -28,7 +28,7 @@ Primary funnel:
 - TypeScript (strict)
 - Tailwind/PostCSS foundation + authored CSS modules
 - GitHub Actions quality and visual verification
-- Vercel-ready deployment configuration
+- Vercel deployment with Git integration
 
 ## Quality gate
 
@@ -42,7 +42,8 @@ Every push to `main` or `feature/**` runs:
 6. route smoke tests
 7. robots/sitemap/manifest/Open Graph checks
 8. contact-intake API contract check
-9. desktop and mobile render capture for the primary routes
+9. security and branded 404 checks
+10. desktop and mobile render capture for the primary routes
 
 ## Contact intake
 
@@ -61,6 +62,8 @@ Without `CONTACT_WEBHOOK_URL`, the public form remains visibly in staging and ca
 V1 includes:
 
 - centralized canonical site configuration
+- explicit route canonicals
+- `WebSite` and creator `Person` structured data
 - metadata and social-card support
 - generated Open Graph image
 - favicon and web app manifest
@@ -108,8 +111,10 @@ npm run build
 
 ## Current status — 2026-09-19
 
-**V1 implementation is production-buildable and in launch hardening.**
+**V1 implementation is production-buildable and the repository is linked to Vercel.**
 
-Implemented: responsive multi-route UI, desktop/mobile navigation, media kit, structured contact intake, SEO metadata, social sharing assets, search metadata endpoints, security headers, and automated visual QA.
+Implemented: responsive multi-route UI, desktop/mobile navigation, media kit, structured contact intake, SEO metadata and structured data, social sharing assets, search metadata endpoints, security headers, branded 404, and automated visual QA.
 
-Remaining launch inputs: final production domain, confirmed social profile URLs/content assets, and the private contact-delivery destination. Vercel preview/deployment is the next infrastructure step once the repository is imported/linked to a Vercel project.
+Vercel project `framebynavin-web` is connected through Git integration. The initial production import deployed the current `main` foundation commit; this branch is the complete V1 candidate and should receive a preview deployment before merge.
+
+Remaining launch inputs: final production domain, confirmed social profile URLs/content assets, and the private contact-delivery destination. Production promotion should happen only after the V1 preview is verified.
