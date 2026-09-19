@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { services } from "@/content/site";
 import styles from "../editorial-subpage.module.css";
+import portraitStyles from "./services-portrait.module.css";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -23,10 +25,23 @@ export default function ServicesPage() {
 
       <section className={`${styles.shell} ${styles.hero}`}>
         <div className={styles.heroMeta}>03 / SERVICES</div>
-        <div className={styles.heroBody}>
-          <p className="eyebrow">WORK WITH ME / COMMERCIAL</p>
-          <h1>PARTNERSHIPS<br/><em>WITH A POINT.</em></h1>
-          <p className={styles.lead}>Commercial work should still feel like FrameByNavin. The format, message and creative approach are shaped around the audience rather than pasted on top of it.</p>
+        <div className={`${styles.heroBody} ${portraitStyles.layout}`}>
+          <div className={portraitStyles.copy}>
+            <p className="eyebrow">WORK WITH ME / COMMERCIAL</p>
+            <h1>PARTNERSHIPS<br/><em>WITH A POINT.</em></h1>
+            <p className={styles.lead}>Commercial work should still feel like FrameByNavin. The format, message and creative approach are shaped around the audience rather than pasted on top of it.</p>
+          </div>
+          <div className={portraitStyles.figure} aria-label="Illustrated portrait of Navin">
+            <span className={portraitStyles.figureLabel} aria-hidden="true">COLLABORATE</span>
+            <Image
+              src="/brand/navin-standing.webp"
+              alt="Illustrated portrait of Navin standing with folded arms"
+              width={323}
+              height={520}
+              priority
+            />
+            <span className={portraitStyles.badge}>Selected projects</span>
+          </div>
         </div>
       </section>
 
