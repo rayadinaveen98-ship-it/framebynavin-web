@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LiveYoutube } from "@/components/live-youtube";
+import { RecentFrames } from "@/components/recent-frames";
 import { SiteHeader } from "@/components/site-header";
 import { metrics, projects, selectedWork, services, socials } from "@/content/site";
+import styles from "./home-v3.module.css";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -12,124 +14,159 @@ function Arrow() {
   return <span aria-hidden="true">↗</span>;
 }
 
+const tickerItems = [
+  "CINEMA",
+  "SCENE BREAKDOWNS",
+  "VISUAL STORYTELLING",
+  "STORIES",
+  "APPS",
+  "GAMES",
+  "CRAFT",
+];
+
 export default function Home() {
   return (
-    <main>
+    <main className={styles.page}>
       <SiteHeader />
 
-      <section id="top" className="hero hero-v2 shell">
-        <div className="hero-v2-grid">
-          <div className="hero-v2-copy">
-            <div className="hero-v2-kicker">
-              <p className="eyebrow">CINEMA ANALYSIS / VISUAL STORYTELLING</p>
+      <section id="top" className={`${styles.hero} shell`}>
+        <div className={styles.heroGrid}>
+          <div className={styles.heroCopy}>
+            <div className={styles.kicker}>
+              <p className="eyebrow">CINEMA / VISUAL STORYTELLING</p>
               <span>INDIA</span>
             </div>
-            <h1><span>SEE THE</span><em>FRAME.</em></h1>
-            <p className="hero-v2-manifesto">BUILD THE WORLD.</p>
-            <p className="lede">
-              Cinema analysis, scene breakdowns and visual storytelling — with room for original stories, apps and games as they become public.
+            <h1 className={styles.heroTitle}><span>SEE THE</span><em>FRAME.</em></h1>
+            <p className={styles.manifesto}>BUILD THE WORLD.</p>
+            <p className={styles.lede}>
+              FrameByNavin starts with cinema — scene breakdowns, cinematic moments and the choices behind memorable images — then grows outward into original stories, products and games.
             </p>
-            <div className="hero-actions">
+            <div className={styles.actions}>
               <Link className="button button-primary" href="/work">VIEW WORK <Arrow /></Link>
               <Link className="button" href="/contact">START A PROJECT</Link>
+            </div>
+            <div className={styles.metricBar}>
+              {metrics.map((metric) => (
+                <div key={metric.label}>
+                  <strong>{metric.value}</strong>
+                  <span>{metric.label}</span>
+                  <small>{metric.asOf}</small>
+                </div>
+              ))}
             </div>
           </div>
 
           <LiveYoutube />
         </div>
+      </section>
 
-        <div className="metric-strip metric-strip-v2">
-          {metrics.map((metric) => (
-            <div key={metric.label}>
-              <strong>{metric.value}</strong>
-              <span>{metric.label}</span>
-              <small>AS OF {metric.asOf.toUpperCase()}</small>
+      <div className={styles.ticker} aria-hidden="true">
+        <div className={styles.tickerTrack}>
+          {[...tickerItems, ...tickerItems].map((item, index) => <span key={`${item}-${index}`}>{item}</span>)}
+        </div>
+      </div>
+
+      <section className={`${styles.recent} shell`}>
+        <RecentFrames />
+      </section>
+
+      <section className={styles.editorial}>
+        <div className={`${styles.editorialInner} shell`}>
+          <div className={styles.editorialIndex}>01 / PHILOSOPHY</div>
+          <div>
+            <h2>Cinema first.<br/><em>Curiosity everywhere.</em></h2>
+            <div className={styles.editorialCopy}>
+              <p>
+                The work is not about collecting clips. It is about noticing why an image, cut, performance or sound choice stays with us — and turning that curiosity into useful, watchable storytelling.
+              </p>
+              <div className={styles.editorialQuote}>FRAME BY FRAME / IDEA BY IDEA / PROJECT BY PROJECT</div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      <section id="work" className="section shell">
-        <div className="section-heading">
-          <div><p className="eyebrow">02 / CREATIVE LANES</p><h2>What exists now.<br/>What comes next.</h2></div>
-          <p>REAL STATUS / NO PLACEHOLDERS</p>
+      <section id="work" className={`${styles.section} shell`}>
+        <div className={styles.sectionHead}>
+          <div><p className="eyebrow">02 / CREATIVE LANES</p><h2>One creator.<br/>More than one medium.</h2></div>
+          <span>REAL STATUS / SEP 2026</span>
         </div>
-        <div className="project-grid project-grid-v2">
+
+        <div className={styles.projectList}>
           {projects.map((project) => (
-            <article className="project-card project-card-v2" key={project.title}>
-              <div className="card-top"><span>{project.index} / {project.title.toUpperCase()}</span><span>{project.status}</span></div>
+            <Link className={styles.projectRow} href="/work" key={project.title}>
+              <span>{project.index}</span>
+              <span className={styles.projectStatus}>{project.status}</span>
               <div>
-                <p className="project-name">{project.name}</p>
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
               </div>
-              <Link href="/work">{project.action} <Arrow /></Link>
-            </article>
+              <span className={styles.projectAction}>{project.action}</span>
+              <span className={styles.projectArrow}>↗</span>
+            </Link>
           ))}
         </div>
       </section>
 
-      <section className="section shell selected-work selected-work-v2">
-        <div className="section-heading">
+      <section className={`${styles.section} shell`}>
+        <div className={styles.sectionHead}>
           <div><p className="eyebrow">03 / VERIFIED PROOF</p><h2>Work that already moved.</h2></div>
-          <p>MANUAL SNAPSHOT / SEP 2026</p>
+          <span>MANUAL SNAPSHOT / SEP 2026</span>
         </div>
-        <div className="work-list">
+        <div className={styles.proofGrid}>
           {selectedWork.map((work) => (
-            <article key={work.index} className="work-row work-row-v2">
-              <span>{work.index}</span>
-              <div><small>{work.type}</small><h3>{work.title}</h3></div>
-              <div className="work-proof"><strong>{work.metric}</strong><small>AS OF {work.asOf.toUpperCase()}</small></div>
+            <article className={styles.proofCard} key={work.index}>
+              <div className={styles.proofTop}><span>{work.index}</span><span>{work.type}</span></div>
+              <div className={styles.proofBottom}>
+                <p className={styles.proofMetric}>{work.metric}</p>
+                <p className={styles.proofTitle}>{work.title}</p>
+              </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="services" className="section shell services-section">
-        <div className="services-intro">
-          <p className="eyebrow">04 / WORK WITH ME</p>
-          <h2>Commercial work<br/>without losing the voice.</h2>
-          <p>Selected partnerships that make sense for the audience, the project and the platform. Independent editorial analysis stays independent.</p>
-          <div className="hero-actions">
-            <Link className="button button-primary" href="/contact">START A BRIEF <Arrow /></Link>
-            <Link className="button" href="/services">VIEW SERVICES</Link>
+      <section id="services" className={`${styles.section} ${styles.services} shell`}>
+        <div className={styles.serviceLead}>
+          <div>
+            <p className="eyebrow">04 / WORK WITH ME</p>
+            <h2>Commercial work.<br/>Still FrameByNavin.</h2>
+          </div>
+          <div>
+            <p>Selected collaborations should fit the audience, the project and the voice. Independent editorial analysis stays independent.</p>
+            <div className={styles.actions}>
+              <Link className="button" href="/contact">START A BRIEF <Arrow /></Link>
+              <Link className="button" href="/services">SERVICES</Link>
+            </div>
           </div>
         </div>
-        <div className="service-list">
+        <div className={styles.serviceList}>
           {services.map(([index, title, description]) => (
-            <article key={index}><span>{index}</span><div><h3>{title}</h3><p>{description}</p></div><span>↗</span></article>
+            <article className={styles.serviceItem} key={index}>
+              <span>{index}</span>
+              <div><h3>{title}</h3><p>{description}</p></div>
+              <span>↗</span>
+            </article>
           ))}
         </div>
       </section>
 
-      <section className="section shell media-kit">
-        <div><p className="eyebrow">05 / MEDIA KIT</p><h2>The numbers.<br/>The audience.<br/>The work.</h2></div>
-        <div className="media-card">
-          <span>FRAMEBYNAVIN / MEDIA KIT</span>
-          <div className="media-metrics">
-            {metrics.map((metric) => (
-              <p key={metric.label}><b>{metric.value}</b>{metric.label}<small>As of {metric.asOf}</small></p>
-            ))}
-          </div>
-          <Link href="/media-kit">OPEN MEDIA KIT <Arrow /></Link>
-        </div>
+      <section className={`${styles.section} ${styles.bottomGrid} shell`}>
+        <article className={styles.bottomCard}>
+          <div><p className="eyebrow">05 / MEDIA KIT</p><h2>The audience.<br/>The work.<br/>The numbers.</h2></div>
+          <div><p>Current public proof, collaboration formats and the context a brand or film team needs before reaching out.</p><Link className="button" href="/media-kit">OPEN MEDIA KIT <Arrow /></Link></div>
+        </article>
+        <article className={styles.bottomCard}>
+          <div><p className="eyebrow">06 / ABOUT</p><h2>Curiosity first.<br/>Craft always.</h2></div>
+          <div><p>FrameByNavin is an independent creator system centered on cinema today, with room for original stories, useful products and story-driven games.</p><Link className="button" href="/about">ABOUT NAVIN <Arrow /></Link></div>
+        </article>
       </section>
 
-      <section id="about" className="section shell about-section">
-        <div className="about-index">06 / ABOUT</div>
+      <section id="contact" className={`${styles.cta} shell`}>
         <div>
-          <p className="eyebrow">NAVIN / INDEPENDENT CREATOR</p>
-          <h2>Curiosity first.<br/><em>Craft always.</em></h2>
-          <p>FrameByNavin currently centers on cinema: the frames, choices and craft behind scenes that stay with us. The larger creator system also leaves room for original stories, useful products and story-driven games.</p>
-          <p>Commercial collaborations live beside the work, never inside the opinion.</p>
-          <Link className="button" href="/about">MORE ABOUT THE SYSTEM ↗</Link>
+          <p className="eyebrow">07 / START A PROJECT</p>
+          <h2>Have something worth building?</h2>
+          <p>Brand, film, product or an unusual creative idea — send the brief.</p>
         </div>
-      </section>
-
-      <section id="contact" className="cta shell">
-        <p className="eyebrow">07 / START A PROJECT</p>
-        <h2>Have something<br/>worth building?</h2>
-        <p>Brand, film, product or an unusual creative idea — send the brief.</p>
         <Link className="button button-primary" href="/contact">LET&apos;S WORK <Arrow /></Link>
       </section>
 
