@@ -47,15 +47,18 @@ Every push to `main` or `feature/**` runs:
 
 ## Contact intake
 
-The `/contact` form is fully implemented but activates delivery only when the server has a secure webhook configured.
+V1 uses a zero-cost email-draft workflow so no paid domain or email provider is required for launch.
 
-Required launch configuration is documented in `.env.example`:
+- Public contact destination: `rayadinaveen98@gmail.com`
+- Visitors can fill the structured `/contact` form and open a prefilled email draft addressed to that inbox.
+- A direct `mailto:` fallback is also visible on the contact page.
+- The private `/api/contact` webhook contract remains in the codebase for a future server-delivered intake upgrade.
 
-- `NEXT_PUBLIC_SITE_URL` — final canonical domain
-- `CONTACT_WEBHOOK_URL` — private endpoint that receives validated project briefs
-- `CONTACT_WEBHOOK_TOKEN` — optional Bearer token for that endpoint
+When FrameByNavin later gets a custom domain/business mailbox, the public contact destination can be changed centrally without redesigning the form.
 
-Without `CONTACT_WEBHOOK_URL`, the public form remains visibly in staging and cannot silently lose submissions.
+## Domain / canonical URL
+
+A custom domain is intentionally deferred for V1 to keep launch cost at zero. Until then, the Vercel production URL is the public/canonical website address. `NEXT_PUBLIC_SITE_URL` remains available for a future custom domain such as `framebynavin.com`.
 
 ## SEO / platform readiness
 
@@ -111,10 +114,16 @@ npm run build
 
 ## Current status — 2026-09-19
 
-**V1 implementation is production-buildable and the repository is linked to Vercel.**
+**V1 is implemented, linked to Vercel, and in final production-launch QA.**
 
-Implemented: responsive multi-route UI, desktop/mobile navigation, media kit, structured contact intake, SEO metadata and structured data, social sharing assets, search metadata endpoints, security headers, branded 404, and automated visual QA.
+Implemented: responsive multi-route UI, desktop/mobile navigation, media kit, structured project intake, zero-cost Gmail contact flow, SEO metadata and structured data, social sharing assets, search metadata endpoints, security headers, branded 404, Vercel Next.js configuration, and automated visual QA.
 
-Vercel project `framebynavin-web` is connected through Git integration. The initial production import deployed the current `main` foundation commit; this branch is the complete V1 candidate and should receive a preview deployment before merge.
+Current zero-cost launch configuration:
 
-Remaining launch inputs: final production domain, confirmed social profile URLs/content assets, and the private contact-delivery destination. Production promotion should happen only after the V1 preview is verified.
+- Hosting: Vercel
+- Repository: GitHub
+- Domain: Vercel-provided production URL for now
+- Contact: `rayadinaveen98@gmail.com`
+- Paid services required: none
+
+A custom domain and dedicated business mailbox are optional future upgrades, not V1 launch blockers.
