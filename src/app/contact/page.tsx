@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import styles from "./contact.module.css";
 
 export const metadata: Metadata = {
@@ -10,10 +11,10 @@ export default function ContactPage() {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <a className="brand" href="/" aria-label="FrameByNavin home">
+        <Link className="brand" href="/" aria-label="FrameByNavin home">
           FRAMEBYNAVIN<span>●</span>
-        </a>
-        <a className={styles.back} href="/">← BACK HOME</a>
+        </Link>
+        <Link className={styles.back} href="/">← BACK HOME</Link>
       </header>
 
       <section className={`${styles.shell} ${styles.hero}`}>
