@@ -1,0 +1,128 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Start production server
+        run: |
+          npm run start -- -p 3000 > /tmp/framebynavin-next.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/ > /tmp/homepage.html; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/framebynavin-next.log
+          exit 1
+
+      - name: Smoke test routes
+        run: |
+          grep -q "SEE THE" /tmp/homepage.html
+          grep -q "FRAMEBYNAVIN" /tmp/homepage.html
+          for route in work services about media-kit contact; do
+            curl -fsS "http://127.0.0.1:3000/$route" > "/tmp/$route.html"
+          done
+          grep -q "WORK THAT" /tmp/work.html
+          grep -q "PARTNERSHIPS" /tmp/services.html
+          grep -q "CURIOSITY FIRST" /tmp/about.html
+          grep -q "THE AUDIENCE" /tmp/media-kit.html
+          grep -q "PROJECT INTAKE" /tmp/contact.html
+
+      - name: Verify search and sharing metadata
+        run: |
+          curl -fsS http://127.0.0.1:3000/robots.txt > /tmp/robots.txt
+          curl -fsS http://127.0.0.1:3000/sitemap.xml > /tmp/sitemap.xml
+          curl -fsS http://127.0.0.1:3000/manifest.webmanifest > /tmp/manifest.webmanifest
+          curl -fsS -o /tmp/opengraph-image.png http://127.0.0.1:3000/opengraph-image
+          grep -q "sitemap.xml" /tmp/robots.txt
+          grep -q "/work" /tmp/sitemap.xml
+          grep -q "FrameByNavin" /tmp/manifest.webmanifest
+          test -s /tmp/opengraph-image.png
+          grep -q 'application/ld+json' /tmp/homepage.html
+          grep -q 'https://schema.org' /tmp/homepage.html
+          grep -q 'rel="canonical"' /tmp/homepage.html
+          grep -q '/work' /tmp/work.html
+          grep -q 'rel="canonical"' /tmp/work.html
+          grep -q 'rel="canonical"' /tmp/services.html
+          grep -q 'rel="canonical"' /tmp/about.html
+          grep -q 'rel="canonical"' /tmp/media-kit.html
+          grep -q 'rel="canonical"' /tmp/contact.html
+
+      - name: Verify contact intake staging contract
+        run: |
+          status=$(curl -sS -o /tmp/contact-api.json -w "%{http_code}" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"Test User","email":"test@example.com","company":"Test Studio","type":"Creative project","budget":"Let'"'"'s discuss","timeline":"October 2026","deliverables":"Creative consultation","message":"This is a valid automated CI project brief used only for endpoint verification.","website":""}' \
+            http://127.0.0.1:3000/api/contact)
+          test "$status" = "503"
+          grep -q "not configured" /tmp/contact-api.json
+
+      - name: Verify security and not found behavior
+        run: |
+          curl -sS -D /tmp/headers.txt -o /dev/null http://127.0.0.1:3000/
+          grep -qi "x-content-type-options: nosniff" /tmp/headers.txt
+          grep -qi "x-frame-options: DENY" /tmp/headers.txt
+          grep -qi "referrer-policy: strict-origin-when-cross-origin" /tmp/headers.txt
+          status=$(curl -sS -o /tmp/not-found.html -w "%{http_code}" http://127.0.0.1:3000/route-that-does-not-exist)
+          test "$status" = "404"
+          grep -q "THIS FRAME" /tmp/not-found.html
+
+      - name: Capture desktop and mobile renders
+        run: |
+          CHROME_BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME_BIN"
+          capture() {
+            route="$1"
+            name="$2"
+            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,5200 --screenshot="$name-desktop.png" "http://127.0.0.1:3000$route"
+            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,5200 --screenshot="$name-mobile.png" "http://127.0.0.1:3000$route"
+          }
+          capture / homepage
+          capture /work work
+          capture /services services
+          capture /about about
+          capture /media-kit media-kit
+          capture /contact contact
+
+      - name: Upload visual verification
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-renders
+          path: |
+            *-desktop.png
+            *-mobile.png
+          if-no-files-found: error
