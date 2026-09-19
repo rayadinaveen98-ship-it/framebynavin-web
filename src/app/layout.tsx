@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
+import { AmbientMotion } from "@/components/ambient-motion";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -103,6 +104,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <AmbientMotion />
         {children}
       </body>
     </html>
