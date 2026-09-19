@@ -15,7 +15,17 @@ function extract(path, name) {
   return match[1];
 }
 
-const parts = [1, 2, 3, 4].map((number) => extract(`src/content/navin-standing-${number}.ts`, `standingPart${number}`));
+function repairStandingPart1(part) {
+  const hasKnownSingleCharacterGap = part.length === 3999 && part.slice(578, 585) === "XlV9umn";
+  if (hasKnownSingleCharacterGap) {
+    console.log("part1: repaired known missing character at index 582");
+    return `${part.slice(0, 582)}l${part.slice(582)}`;
+  }
+  return part;
+}
+
+const rawParts = [1, 2, 3, 4].map((number) => extract(`src/content/navin-standing-${number}.ts`, `standingPart${number}`));
+const parts = [repairStandingPart1(rawParts[0]), rawParts[1], rawParts[2], rawParts[3]];
 let failed = false;
 
 for (let i = 0; i < parts.length; i += 1) {
