@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { FeaturedReels } from "@/components/featured-reels";
 import { LiveYoutube } from "@/components/live-youtube";
 import { RecentFrames } from "@/components/recent-frames";
 import { SiteHeader } from "@/components/site-header";
@@ -68,12 +70,13 @@ export default function Home() {
 
       <section className={`${styles.recent} shell`}>
         <RecentFrames />
+        <FeaturedReels />
       </section>
 
       <section className={styles.editorial}>
         <div className={`${styles.editorialInner} shell`}>
           <div className={styles.editorialIndex}>01 / PHILOSOPHY</div>
-          <div>
+          <div className={styles.editorialBody}>
             <h2>Cinema first.<br/><em>Curiosity everywhere.</em></h2>
             <div className={styles.editorialCopy}>
               <p>
@@ -81,6 +84,16 @@ export default function Home() {
               </p>
               <div className={styles.editorialQuote}>FRAME BY FRAME / IDEA BY IDEA / PROJECT BY PROJECT</div>
             </div>
+          </div>
+          <div className={styles.creatorFigure} aria-hidden="true">
+            <span className={styles.creatorWord}>NAVIN</span>
+            <Image
+              src="/brand/navin-thinking.webp"
+              alt=""
+              width={291}
+              height={420}
+              className={styles.creatorImage}
+            />
           </div>
         </div>
       </section>
