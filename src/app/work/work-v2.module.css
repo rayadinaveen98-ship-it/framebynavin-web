@@ -1,0 +1,206 @@
+.page { min-height: 100vh; }
+
+.hero {
+  width: min(100% - 96px, 1500px);
+  margin-inline: auto;
+  padding: 62px 0 54px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 36px;
+}
+
+.index {
+  color: var(--muted-2);
+  font-size: 9px;
+  letter-spacing: .14em;
+}
+
+.heroBody { max-width: 980px; }
+
+.hero h1 {
+  margin: 18px 0 20px;
+  font-size: clamp(58px, 7vw, 104px);
+  line-height: .86;
+  letter-spacing: -.065em;
+}
+
+.hero h1 em { color: var(--accent); font-style: normal; }
+
+.lead {
+  max-width: 720px;
+  color: #9aa2a7;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.section {
+  width: min(100% - 96px, 1500px);
+  margin-inline: auto;
+  padding-top: 76px;
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 26px;
+}
+
+.heading h2 {
+  margin: 9px 0 0;
+  font-size: clamp(38px, 4.5vw, 66px);
+  line-height: .94;
+  letter-spacing: -.045em;
+}
+
+.heading > span {
+  color: var(--muted-2);
+  font-size: 9px;
+  letter-spacing: .12em;
+}
+
+.proofGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.proof {
+  min-height: 280px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, #131719, #090a0b 74%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform .3s ease, border-color .3s ease;
+}
+
+.proof:hover {
+  transform: translateY(-6px);
+  border-color: #555d62;
+}
+
+.proofTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted-2);
+  font-size: 8px;
+  letter-spacing: .12em;
+}
+
+.proof strong {
+  display: block;
+  font-size: clamp(56px, 6vw, 92px);
+  line-height: .84;
+  letter-spacing: -.065em;
+}
+
+.proof h3 {
+  max-width: 600px;
+  margin: 16px 0 0;
+  color: #c5cace;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.projectList { border-top: 1px solid var(--line); }
+
+.projectRow {
+  min-height: 142px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 52px 150px minmax(0,1fr) 34px;
+  gap: 22px;
+  align-items: center;
+  transition: background .3s ease, padding .3s ease;
+}
+
+.projectRow:hover {
+  padding-inline: 16px;
+  background: linear-gradient(90deg, rgba(255,68,56,.1), transparent 65%);
+}
+
+.projectRow > span:first-child,
+.status {
+  color: var(--muted-2);
+  font-size: 8px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.projectRow h3 {
+  margin: 0;
+  font-size: clamp(28px, 2.6vw, 42px);
+  letter-spacing: -.04em;
+}
+
+.projectRow p {
+  max-width: 650px;
+  margin: 8px 0 0;
+  color: #92999e;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.arrow {
+  color: var(--accent);
+  font-size: 20px;
+  transition: transform .25s ease;
+}
+
+.projectRow:hover .arrow { transform: translate(5px,-5px); }
+
+.cta {
+  width: min(100% - 96px, 1500px);
+  margin: 92px auto 0;
+  padding: 52px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: end;
+  gap: 30px;
+}
+
+.cta h2 {
+  max-width: 840px;
+  margin: 10px 0 0;
+  font-size: clamp(48px, 5.7vw, 86px);
+  line-height: .9;
+  letter-spacing: -.055em;
+}
+
+.cta p {
+  max-width: 600px;
+  color: #929ba0;
+  line-height: 1.65;
+}
+
+.footer {
+  width: min(100% - 96px, 1500px);
+  margin-inline: auto;
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted-2);
+  font-size: 9px;
+  letter-spacing: .12em;
+}
+
+@media (max-width: 800px) {
+  .hero, .section, .cta, .footer { width: min(100% - 32px, 1500px); }
+  .hero { grid-template-columns: 1fr; padding-top: 44px; }
+  .hero h1 { font-size: clamp(58px, 17vw, 86px); }
+  .heading { grid-template-columns: 1fr; }
+  .proofGrid { grid-template-columns: 1fr; }
+  .projectRow { grid-template-columns: 30px minmax(0,1fr) 28px; gap: 12px; padding: 20px 0; }
+  .status { display: none; }
+  .cta { grid-template-columns: 1fr; }
+  .footer { align-items: flex-start; flex-direction: column; justify-content: center; gap: 6px; }
+}
