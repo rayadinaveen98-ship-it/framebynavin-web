@@ -91,6 +91,22 @@
   text-transform: none;
 }
 
+.meta a,
+.directEmail {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 4px;
+}
+
+.meta a:hover,
+.meta a:focus-visible,
+.directEmail:hover,
+.directEmail:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+
 .form {
   position: relative;
   border: 1px solid var(--line);
@@ -201,22 +217,22 @@
 .submit {
   min-height: 46px;
   padding: 0 18px;
-  border: 1px solid var(--line-strong);
-  background: #171a1c;
-  color: #737b80;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #08090a;
   font: inherit;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .1em;
-  cursor: not-allowed;
+  cursor: pointer;
   transition: .2s ease;
 }
 
-.submit:not(:disabled) {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #08090a;
-  cursor: pointer;
+.submit:disabled {
+  border-color: var(--line-strong);
+  background: #171a1c;
+  color: #737b80;
+  cursor: wait;
 }
 
 .submit:not(:disabled):hover,
