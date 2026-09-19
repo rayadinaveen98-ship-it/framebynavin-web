@@ -86,12 +86,12 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.creatorFigure} aria-hidden="true">
-            <span className={styles.creatorWord}>NAVIN</span>
+            <span className={styles.creatorWord}>FRAME</span>
             <Image
-              src="/brand/navin-thinking.webp"
+              src="/brand/framebynavin-logo.webp"
               alt=""
-              width={291}
-              height={420}
+              width={371}
+              height={300}
               className={styles.creatorImage}
             />
           </div>
