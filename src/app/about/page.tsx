@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { projects } from "@/content/site";
 import styles from "../editorial-subpage.module.css";
+import portraitStyles from "./about-portrait.module.css";
 
 export const metadata: Metadata = {
   title: "About",
@@ -18,13 +19,13 @@ export default function AboutPage() {
 
       <section className={`${styles.shell} ${styles.hero}`}>
         <div className={styles.heroMeta}>04 / ABOUT</div>
-        <div className={`${styles.heroBody} ${styles.aboutHeroBody}`}>
-          <div className={styles.aboutHeroCopy}>
+        <div className={`${styles.heroBody} ${portraitStyles.layout}`}>
+          <div className={portraitStyles.copy}>
             <p className="eyebrow">NAVIN / INDEPENDENT CREATOR</p>
             <h1>CURIOSITY FIRST.<br/><em>CRAFT ALWAYS.</em></h1>
             <p className={styles.lead}>FrameByNavin began with a simple instinct: when a scene works, look closer. The larger creator system grows from the same instinct — notice, understand, then make.</p>
           </div>
-          <div className={styles.aboutPortrait} aria-label="Illustrated portrait of Navin">
+          <div className={portraitStyles.portrait} aria-label="Illustrated portrait of Navin">
             <span aria-hidden="true">NAVIN</span>
             <Image
               src="/brand/navin-standing.webp"
