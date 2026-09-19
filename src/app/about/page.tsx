@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { projects } from "@/content/site";
@@ -17,10 +18,22 @@ export default function AboutPage() {
 
       <section className={`${styles.shell} ${styles.hero}`}>
         <div className={styles.heroMeta}>04 / ABOUT</div>
-        <div className={styles.heroBody}>
-          <p className="eyebrow">NAVIN / INDEPENDENT CREATOR</p>
-          <h1>CURIOSITY FIRST.<br/><em>CRAFT ALWAYS.</em></h1>
-          <p className={styles.lead}>FrameByNavin began with a simple instinct: when a scene works, look closer. The larger creator system grows from the same instinct — notice, understand, then make.</p>
+        <div className={`${styles.heroBody} ${styles.aboutHeroBody}`}>
+          <div className={styles.aboutHeroCopy}>
+            <p className="eyebrow">NAVIN / INDEPENDENT CREATOR</p>
+            <h1>CURIOSITY FIRST.<br/><em>CRAFT ALWAYS.</em></h1>
+            <p className={styles.lead}>FrameByNavin began with a simple instinct: when a scene works, look closer. The larger creator system grows from the same instinct — notice, understand, then make.</p>
+          </div>
+          <div className={styles.aboutPortrait} aria-label="Illustrated portrait of Navin">
+            <span aria-hidden="true">NAVIN</span>
+            <Image
+              src="/brand/navin-standing.webp"
+              alt="Illustrated portrait of Navin standing with folded arms"
+              width={323}
+              height={520}
+              priority
+            />
+          </div>
         </div>
       </section>
 
