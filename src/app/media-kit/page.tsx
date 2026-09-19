@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { metrics, selectedWork, services } from "@/content/site";
-import styles from "../subpage.module.css";
+import styles from "../editorial-subpage.module.css";
 
 export const metadata: Metadata = {
   title: "Media Kit",
@@ -16,8 +16,9 @@ export default function MediaKitPage() {
   return (
     <main className={styles.page}>
       <SiteHeader />
+
       <section className={`${styles.shell} ${styles.hero}`}>
-        <div className={styles.index}>05 / MEDIA KIT</div>
+        <div className={styles.heroMeta}>05 / MEDIA KIT</div>
         <div className={styles.heroBody}>
           <p className="eyebrow">FRAMEBYNAVIN / PARTNER VIEW</p>
           <h1>THE AUDIENCE.<br/><em>THE PROOF.</em></h1>
@@ -26,35 +27,84 @@ export default function MediaKitPage() {
       </section>
 
       <section className={`${styles.shell} ${styles.section}`}>
-        <div className={styles.sectionHead}><div><p className="eyebrow">CURRENT SNAPSHOT</p><h2>Audience signals.</h2></div><p>UPDATED MANUALLY / V1</p></div>
-        <div className={styles.statGrid}>{metrics.map((metric) => <div className={styles.stat} key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>)}</div>
-        <div className={styles.note} style={{marginTop: 12}}><strong>Metric context</strong>These are selected current proof points used by the website. Production values come from one central content configuration so updates do not require redesigning components.</div>
+        <div className={styles.heading}>
+          <div><p className="eyebrow">CURRENT SNAPSHOT</p><h2>Audience signals.</h2></div>
+          <span>MANUAL SNAPSHOT / SEP 2026</span>
+        </div>
+        <div className={styles.metricGrid}>
+          {metrics.map((metric) => (
+            <article className={styles.metric} key={metric.label}>
+              <strong>{metric.value}</strong>
+              <div><span>{metric.label}</span><small>AS OF {metric.asOf.toUpperCase()}</small></div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className={`${styles.shell} ${styles.section}`}>
-        <div className={styles.sectionHead}><div><p className="eyebrow">SELECTED PERFORMANCE</p><h2>Work people watched.</h2></div><p>PUBLIC / SELECTED</p></div>
-        <div className={styles.list}>{selectedWork.map((work) => <article className={styles.row} key={work.index}><span>{work.index}</span><div><small>{work.type}</small><h3>{work.title}</h3></div><strong>{work.metric}</strong></article>)}</div>
+        <div className={styles.heading}>
+          <div><p className="eyebrow">SELECTED PERFORMANCE</p><h2>Work people watched.</h2></div>
+          <span>PUBLIC / SELECTED</span>
+        </div>
+        <div className={styles.proofGrid}>
+          {selectedWork.map((work) => (
+            <article className={styles.proof} key={work.index}>
+              <div className={styles.proofTop}><span>{work.index}</span><span>{work.type}</span></div>
+              <div><strong>{work.metric}</strong><h3>{work.title}</h3></div>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className={`${styles.shell} ${styles.section} ${styles.split}`}>
-        <div className={styles.copy}><p className="eyebrow">CONTENT FIT</p><h2>What the audience comes for.</h2><p>FrameByNavin is cinema-first. The strongest partnership fit is entertainment and creator-adjacent work that can live naturally beside film analysis and visual storytelling.</p></div>
-        <div className={styles.grid3}>{categories.map((category, index) => <article className={styles.card} key={category}><div className={styles.cardTop}><span>0{index + 1}</span><span>CONTENT</span></div><h3>{category}</h3><span className="eyebrow">FRAMEBYNAVIN</span></article>)}</div>
+      <section className={styles.lightBand}>
+        <div className={`${styles.shell} ${styles.lightInner}`}>
+          <div>
+            <p className="eyebrow">CONTENT FIT</p>
+            <h2>What the audience comes for.</h2>
+            <p>FrameByNavin is cinema-first. The strongest partnership fit is entertainment and creator-adjacent work that can live naturally beside film analysis and visual storytelling.</p>
+          </div>
+          <div>
+            <div className={styles.chipGrid}>{categories.map((category) => <span className={styles.chip} key={category}>{category}</span>)}</div>
+            <div className={styles.note} style={{marginTop: 24, borderColor:"rgba(0,0,0,.18)", background:"rgba(255,255,255,.24)", color:"#4f504c"}}><strong style={{color:"#111"}}>Metric context</strong>These are selected current proof points used by the website. They are dated deliberately and should be refreshed when public channel performance materially changes.</div>
+          </div>
+        </div>
       </section>
 
       <section className={`${styles.shell} ${styles.section}`}>
-        <div className={styles.sectionHead}><div><p className="eyebrow">COLLABORATION</p><h2>Available formats.</h2></div><p>BRIEF REQUIRED</p></div>
-        <div className={styles.grid4}>{services.map(([index, title, description]) => <article className={styles.card} key={index}><div className={styles.cardTop}><span>{index}</span><span>COMMERCIAL</span></div><div><h3>{title}</h3><p>{description}</p></div><Link href="/contact">START BRIEF ↗</Link></article>)}</div>
+        <div className={styles.heading}>
+          <div><p className="eyebrow">COLLABORATION</p><h2>Available formats.</h2></div>
+          <span>BRIEF REQUIRED</span>
+        </div>
+        <div className={styles.rows}>
+          {services.map(([index, title, description]) => (
+            <Link className={styles.row} href="/contact" key={index}>
+              <span>{index}</span>
+              <span className={styles.rowStatus}>COMMERCIAL</span>
+              <div><h3>{title}</h3><p>{description}</p></div>
+              <span className={styles.rowArrow}>↗</span>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className={`${styles.shell} ${styles.section} ${styles.split}`}>
-        <div className={styles.copy}><p className="eyebrow">EDITORIAL POLICY</p><h2>Promotion and opinion are separate.</h2></div>
+        <div className={styles.copy}>
+          <p className="eyebrow">EDITORIAL POLICY</p>
+          <h2>Promotion and opinion are separate.</h2>
+        </div>
         <div className={styles.note}><strong>Non-negotiable</strong>Paid collaboration can define promotional deliverables and campaign messaging. It does not guarantee a favorable independent review, editorial conclusion or disguised endorsement.</div>
       </section>
 
       <section className={`${styles.shell} ${styles.cta}`}>
-        <p className="eyebrow">PARTNERSHIP INQUIRY</p><h2>Have a campaign in mind?</h2><p>Send the campaign objective, release or product, platform, deliverables, timeline and budget range. A downloadable PDF media kit can be added once audience demographics and final brand contact details are ready.</p><Link className="button button-primary" href="/contact">SEND THE BRIEF ↗</Link>
+        <div>
+          <p className="eyebrow">PARTNERSHIP INQUIRY</p>
+          <h2>Have a campaign in mind?</h2>
+          <p>Send the campaign objective, release or product, platform, deliverables, timeline and budget range. A downloadable PDF can be added later when audience demographics are ready to publish.</p>
+        </div>
+        <Link className="button button-primary" href="/contact">SEND THE BRIEF ↗</Link>
       </section>
-      <footer className={`${styles.shell} ${styles.footer}`}><span>FRAMEBYNAVIN / MEDIA KIT</span><span>SELECTED METRICS / VERIFIED BEFORE LAUNCH</span></footer>
+
+      <footer className={`${styles.shell} ${styles.footer}`}><span>FRAMEBYNAVIN / MEDIA KIT</span><span>SELECTED METRICS / SEP 2026</span></footer>
     </main>
   );
 }
