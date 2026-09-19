@@ -62,6 +62,26 @@ jobs:
           grep -q "THE AUDIENCE" /tmp/media-kit.html
           grep -q "PROJECT INTAKE" /tmp/contact.html
 
+      - name: Verify search and sharing metadata
+        run: |
+          curl -fsS http://127.0.0.1:3000/robots.txt > /tmp/robots.txt
+          curl -fsS http://127.0.0.1:3000/sitemap.xml > /tmp/sitemap.xml
+          curl -fsS http://127.0.0.1:3000/manifest.webmanifest > /tmp/manifest.webmanifest
+          curl -fsS -o /tmp/opengraph-image.png http://127.0.0.1:3000/opengraph-image
+          grep -q "sitemap.xml" /tmp/robots.txt
+          grep -q "/work" /tmp/sitemap.xml
+          grep -q "FrameByNavin" /tmp/manifest.webmanifest
+          test -s /tmp/opengraph-image.png
+
+      - name: Verify contact intake staging contract
+        run: |
+          status=$(curl -sS -o /tmp/contact-api.json -w "%{http_code}" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"Test User","email":"test@example.com","company":"Test Studio","type":"Creative project","budget":"Let'"'"'s discuss","timeline":"October 2026","deliverables":"Creative consultation","message":"This is a valid automated CI project brief used only for endpoint verification.","website":""}' \
+            http://127.0.0.1:3000/api/contact)
+          test "$status" = "503"
+          grep -q "not configured" /tmp/contact-api.json
+
       - name: Capture desktop and mobile renders
         run: |
           CHROME_BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
