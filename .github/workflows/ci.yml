@@ -53,30 +53,35 @@ jobs:
         run: |
           grep -q "SEE THE" /tmp/homepage.html
           grep -q "FRAMEBYNAVIN" /tmp/homepage.html
-          grep -q "Cinema" /tmp/homepage.html
-          grep -q "Stories" /tmp/homepage.html
-          grep -q "Apps" /tmp/homepage.html
-          grep -q "Games" /tmp/homepage.html
-          curl -fsS http://127.0.0.1:3000/contact > /tmp/contact.html
-          grep -q "START" /tmp/contact.html
+          for route in work services about media-kit contact; do
+            curl -fsS "http://127.0.0.1:3000/$route" > "/tmp/$route.html"
+          done
+          grep -q "WORK THAT" /tmp/work.html
+          grep -q "PARTNERSHIPS" /tmp/services.html
+          grep -q "CURIOSITY FIRST" /tmp/about.html
+          grep -q "THE AUDIENCE" /tmp/media-kit.html
           grep -q "PROJECT INTAKE" /tmp/contact.html
 
       - name: Capture desktop and mobile renders
         run: |
           CHROME_BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
           test -n "$CHROME_BIN"
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,6000 --screenshot=homepage-desktop.png http://127.0.0.1:3000/
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,6000 --screenshot=homepage-mobile.png http://127.0.0.1:3000/
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,3000 --screenshot=contact-desktop.png http://127.0.0.1:3000/contact
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,4200 --screenshot=contact-mobile.png http://127.0.0.1:3000/contact
+          capture() {
+            route="$1"
+            name="$2"
+            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,5200 --screenshot="$name-desktop.png" "http://127.0.0.1:3000$route"
+            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,5200 --screenshot="$name-mobile.png" "http://127.0.0.1:3000$route"
+          }
+          capture / homepage
+          capture /work work
+          capture /services services
+          capture /about about
+          capture /media-kit media-kit
+          capture /contact contact
 
       - name: Upload visual verification
         uses: actions/upload-artifact@v4
         with:
           name: visual-renders
-          path: |
-            homepage-desktop.png
-            homepage-mobile.png
-            contact-desktop.png
-            contact-mobile.png
+          path: "*-desktop.png\n*-mobile.png"
           if-no-files-found: error
