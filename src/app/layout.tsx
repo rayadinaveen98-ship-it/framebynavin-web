@@ -64,10 +64,47 @@ export const metadata: Metadata = {
   },
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      url: siteConfig.url,
+      name: siteConfig.name,
+      description: siteConfig.description,
+      inLanguage: "en-IN",
+      publisher: { "@id": `${siteConfig.url}/#creator` },
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteConfig.url}/#creator`,
+      name: siteConfig.creator,
+      alternateName: siteConfig.name,
+      url: siteConfig.url,
+      description: siteConfig.shortDescription,
+      knowsAbout: [
+        "Cinema analysis",
+        "Film analysis",
+        "Visual storytelling",
+        "Cinematography",
+        "Scene breakdowns",
+        "Creator products",
+      ],
+    },
+  ],
+};
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-IN">
-      <body className={`${spaceGrotesk.variable} antialiased`}>{children}</body>
+      <body className={`${spaceGrotesk.variable} antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
