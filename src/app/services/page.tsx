@@ -7,6 +7,7 @@ import styles from "../subpage.module.css";
 export const metadata: Metadata = {
   title: "Services",
   description: "FrameByNavin brand collaborations, film promotions, short-form content and creative partnerships.",
+  alternates: { canonical: "/services" },
 };
 
 const principles = [
