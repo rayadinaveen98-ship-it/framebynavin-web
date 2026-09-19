@@ -21,9 +21,6 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.creator }],
   creator: siteConfig.creator,
   publisher: siteConfig.name,
-  alternates: {
-    canonical: "/",
-  },
   formatDetection: {
     email: false,
     address: false,
