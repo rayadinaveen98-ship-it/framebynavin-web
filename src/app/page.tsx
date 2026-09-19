@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MobileMenu } from "@/components/mobile-menu";
+import { SiteHeader } from "@/components/site-header";
 import { metrics, projects, selectedWork, services } from "@/content/site";
 
 function Arrow() {
@@ -9,16 +9,7 @@ function Arrow() {
 export default function Home() {
   return (
     <main>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="FrameByNavin home">
-          FRAMEBYNAVIN<span>●</span>
-        </a>
-        <div className="system-status"><b>● ONLINE</b> / CREATOR SYSTEM</div>
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          <a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><Link href="/contact">Contact</Link>
-        </nav>
-        <MobileMenu />
-      </header>
+      <SiteHeader />
 
       <section id="top" className="hero shell">
         <div className="hero-grid">
@@ -29,7 +20,7 @@ export default function Home() {
             <p className="eyebrow">CINEMA ANALYSIS / VISUAL STORYTELLING</p>
             <h1>SEE THE<br/><em>FRAME.</em><br/>BUILD THE WORLD.</h1>
             <p className="lede">Film analysis is the current center — but the system is built to grow into stories, apps, games and future creative projects.</p>
-            <div className="hero-actions"><a className="button button-primary" href="#work">VIEW WORK <Arrow /></a><Link className="button" href="/contact">START A PROJECT</Link></div>
+            <div className="hero-actions"><Link className="button button-primary" href="/work">VIEW WORK <Arrow /></Link><Link className="button" href="/contact">START A PROJECT</Link></div>
           </div>
           <div className="monitor-panel" aria-label="Featured media preview placeholder">
             <div className="monitor-screen"><span>REC ●</span><div className="focus-box"/><p>FEATURED FRAME<br/>MEDIA SLOT</p></div>
@@ -47,7 +38,7 @@ export default function Home() {
           {projects.map((project) => <article className="project-card" key={project.title}>
             <div className="card-top"><span>{project.index} / {project.title.toUpperCase()}</span><span>{project.status}</span></div>
             <div><p className="project-name">{project.name}</p><h3>{project.title}</h3><p>{project.description}</p></div>
-            <Link href="/contact">{project.action} <Arrow /></Link>
+            <Link href="/work">{project.action} <Arrow /></Link>
           </article>)}
         </div>
       </section>
@@ -58,18 +49,18 @@ export default function Home() {
       </section>
 
       <section id="services" className="section shell services-section">
-        <div className="services-intro"><p className="eyebrow">04 / WORK WITH ME</p><h2>Commercial work<br/>without losing the voice.</h2><p>Selected partnerships that make sense for the audience, the project and the platform. Independent editorial analysis stays independent.</p><Link className="button button-primary" href="/contact">START A BRIEF <Arrow /></Link></div>
+        <div className="services-intro"><p className="eyebrow">04 / WORK WITH ME</p><h2>Commercial work<br/>without losing the voice.</h2><p>Selected partnerships that make sense for the audience, the project and the platform. Independent editorial analysis stays independent.</p><div className="hero-actions"><Link className="button button-primary" href="/contact">START A BRIEF <Arrow /></Link><Link className="button" href="/services">VIEW SERVICES</Link></div></div>
         <div className="service-list">{services.map(([index, title, description]) => <article key={index}><span>{index}</span><div><h3>{title}</h3><p>{description}</p></div><span>↗</span></article>)}</div>
       </section>
 
       <section className="section shell media-kit">
         <div><p className="eyebrow">05 / MEDIA KIT</p><h2>The numbers.<br/>The audience.<br/>The work.</h2></div>
-        <div className="media-card"><span>FRAMEBYNAVIN / MEDIA KIT</span><div className="media-metrics">{metrics.map((m) => <p key={m.label}><b>{m.value}</b>{m.label}</p>)}</div><Link href="/contact">REQUEST MEDIA KIT <Arrow /></Link></div>
+        <div className="media-card"><span>FRAMEBYNAVIN / MEDIA KIT</span><div className="media-metrics">{metrics.map((m) => <p key={m.label}><b>{m.value}</b>{m.label}</p>)}</div><Link href="/media-kit">OPEN MEDIA KIT <Arrow /></Link></div>
       </section>
 
       <section id="about" className="section shell about-section">
         <div className="about-index">06 / ABOUT</div>
-        <div><p className="eyebrow">NAVIN / INDEPENDENT CREATOR</p><h2>Curiosity first.<br/><em>Craft always.</em></h2><p>FrameByNavin currently centers on cinema: the frames, choices and craft behind scenes that stay with us. The larger creator system also leaves room for original stories, useful products and story-driven games.</p><p>Commercial collaborations live beside the work, never inside the opinion.</p></div>
+        <div><p className="eyebrow">NAVIN / INDEPENDENT CREATOR</p><h2>Curiosity first.<br/><em>Craft always.</em></h2><p>FrameByNavin currently centers on cinema: the frames, choices and craft behind scenes that stay with us. The larger creator system also leaves room for original stories, useful products and story-driven games.</p><p>Commercial collaborations live beside the work, never inside the opinion.</p><Link className="button" href="/about">MORE ABOUT THE SYSTEM ↗</Link></div>
       </section>
 
       <section id="contact" className="cta shell">
