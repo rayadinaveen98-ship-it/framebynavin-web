@@ -82,6 +82,16 @@ jobs:
           test "$status" = "503"
           grep -q "not configured" /tmp/contact-api.json
 
+      - name: Verify security and not found behavior
+        run: |
+          curl -sS -D /tmp/headers.txt -o /dev/null http://127.0.0.1:3000/
+          grep -qi "x-content-type-options: nosniff" /tmp/headers.txt
+          grep -qi "x-frame-options: DENY" /tmp/headers.txt
+          grep -qi "referrer-policy: strict-origin-when-cross-origin" /tmp/headers.txt
+          status=$(curl -sS -o /tmp/not-found.html -w "%{http_code}" http://127.0.0.1:3000/route-that-does-not-exist)
+          test "$status" = "404"
+          grep -q "THIS FRAME" /tmp/not-found.html
+
       - name: Capture desktop and mobile renders
         run: |
           CHROME_BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
