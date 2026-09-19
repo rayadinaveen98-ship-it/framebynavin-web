@@ -22,11 +22,12 @@ export default function Home() {
           <div className="hero-v2-copy">
             <div className="hero-v2-kicker">
               <p className="eyebrow">CINEMA ANALYSIS / VISUAL STORYTELLING</p>
-              <span>ONGOLE, INDIA</span>
+              <span>INDIA</span>
             </div>
-            <h1>SEE THE<br/><em>FRAME.</em><br/>BUILD THE WORLD.</h1>
+            <h1><span>SEE THE</span><em>FRAME.</em></h1>
+            <p className="hero-v2-manifesto">BUILD THE WORLD.</p>
             <p className="lede">
-              FrameByNavin starts with cinema — scenes, craft and the choices behind memorable images — and grows outward into stories, products and interactive work.
+              Cinema analysis, scene breakdowns and visual storytelling — with room for original stories, apps and games as they become public.
             </p>
             <div className="hero-actions">
               <Link className="button button-primary" href="/work">VIEW WORK <Arrow /></Link>
