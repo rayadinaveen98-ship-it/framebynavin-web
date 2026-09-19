@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { featuredReels } from "@/content/site";
 import styles from "./featured-reels.module.css";
 
@@ -11,47 +10,38 @@ export function FeaturedReels() {
           <h2 id="featured-reels-title">Short form.<br/><em>Same eye.</em></h2>
         </div>
         <div className={styles.context}>
-          <span>04 REAL REELS</span>
+          <span>04 CREATOR-SELECTED REELS</span>
           <a href="https://www.instagram.com/framebynavin/" target="_blank" rel="noreferrer">OPEN INSTAGRAM ↗</a>
         </div>
       </div>
 
       <div className={styles.rail}>
         {featuredReels.map((reel) => (
-          <a
-            className={styles.card}
-            href={reel.href}
-            target="_blank"
-            rel="noreferrer"
-            key={reel.shortcode}
-            aria-label={`Open featured Instagram Reel ${reel.index}`}
-          >
+          <article className={styles.card} key={reel.shortcode}>
             <div className={styles.frame}>
-              <span className={styles.cornerA} aria-hidden="true" />
-              <span className={styles.cornerB} aria-hidden="true" />
-              <span className={styles.record} aria-hidden="true" />
-              <span className={styles.number}>{reel.index}</span>
-              <div className={styles.logoWrap}>
-                <Image
-                  src="/brand/framebynavin-logo.webp"
-                  alt=""
-                  width={371}
-                  height={300}
-                  className={styles.logo}
-                />
+              <iframe
+                src={`https://www.instagram.com/reel/${reel.shortcode}/embed/`}
+                title={`FrameByNavin featured Instagram Reel ${reel.index}`}
+                loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
+              <div className={styles.chrome} aria-hidden="true">
+                <span>{reel.index}</span>
+                <span>REEL / INSTAGRAM</span>
               </div>
-              <div className={styles.cardCopy}>
-                <span>FEATURED REEL</span>
-                <small>{reel.shortcode}</small>
-              </div>
-              <span className={styles.watch}>WATCH ↗</span>
             </div>
-          </a>
+            <div className={styles.meta}>
+              <span>FEATURED REEL {reel.index}</span>
+              <a href={reel.href} target="_blank" rel="noreferrer">OPEN REEL ↗</a>
+            </div>
+          </article>
         ))}
       </div>
 
       <p className={styles.note}>
-        These are creator-selected public Reel links. Performance details are shown only when verified.
+        Real public Instagram embeds. No view counts or performance claims are added here unless separately verified.
       </p>
     </section>
   );
