@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ContactForm } from "./contact-form";
 import styles from "./contact.module.css";
 
 export const metadata: Metadata = {
   title: "Start a Project",
   description: "Send FrameByNavin a structured collaboration or creative project brief.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
+  const contactEnabled = Boolean(process.env.CONTACT_WEBHOOK_URL);
+
   return (
     <main className={styles.page}>
       <header className={styles.header}>
@@ -31,62 +35,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <form className={styles.form} aria-label="Collaboration brief">
-          <div className={styles.formTop}><span>PROJECT INTAKE / V1</span><span>FRAMEBYNAVIN</span></div>
-          <div className={styles.grid}>
-            <div className={styles.field}>
-              <label htmlFor="name">Your name</label>
-              <input id="name" name="name" autoComplete="name" />
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="email">Email</label>
-              <input id="email" name="email" type="email" autoComplete="email" />
-            </div>
-            <div className={styles.full}>
-              <label htmlFor="company">Company / Brand / Film / Product</label>
-              <input id="company" name="company" />
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="type">Collaboration type</label>
-              <select id="type" name="type" defaultValue="">
-                <option value="" disabled>Select one</option>
-                <option>Instagram collaboration</option>
-                <option>YouTube integration</option>
-                <option>Film or entertainment promotion</option>
-                <option>Brand partnership</option>
-                <option>Creative project</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="budget">Budget range</label>
-              <select id="budget" name="budget" defaultValue="">
-                <option value="" disabled>Select range</option>
-                <option>Under ₹10K</option>
-                <option>₹10K–25K</option>
-                <option>₹25K–50K</option>
-                <option>₹50K+</option>
-                <option>Let&apos;s discuss</option>
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="timeline">Desired timeline</label>
-              <input id="timeline" name="timeline" placeholder="e.g. October 2026" />
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="deliverables">Expected deliverables</label>
-              <input id="deliverables" name="deliverables" placeholder="Reel, story, integration…" />
-            </div>
-            <div className={styles.full}>
-              <label htmlFor="message">Tell me about the project</label>
-              <textarea id="message" name="message" />
-            </div>
-            <div className={styles.submitRow}>
-              <p>Submission is intentionally disabled in this development build until the real business inbox and delivery provider are connected.</p>
-              <button className={styles.submit} type="button" disabled>EMAIL SETUP PENDING</button>
-            </div>
-          </div>
-        </form>
+        <ContactForm enabled={contactEnabled} />
       </section>
 
       <footer className={`${styles.shell} ${styles.footer}`}>
