@@ -1,3 +1,4 @@
+import { MobileMenu } from "@/components/mobile-menu";
 import { metrics, projects, selectedWork, services } from "@/content/site";
 
 function Arrow() {
@@ -12,9 +13,10 @@ export default function Home() {
           FRAMEBYNAVIN<span>●</span>
         </a>
         <div className="system-status"><b>● ONLINE</b> / CREATOR SYSTEM</div>
-        <nav aria-label="Primary navigation">
-          <a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a>
+        <nav className="desktop-nav" aria-label="Primary navigation">
+          <a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="/contact">Contact</a>
         </nav>
+        <MobileMenu />
       </header>
 
       <section id="top" className="hero shell">
@@ -26,7 +28,7 @@ export default function Home() {
             <p className="eyebrow">CINEMA ANALYSIS / VISUAL STORYTELLING</p>
             <h1>SEE THE<br/><em>FRAME.</em><br/>BUILD THE WORLD.</h1>
             <p className="lede">Film analysis is the current center — but the system is built to grow into stories, apps, games and future creative projects.</p>
-            <div className="hero-actions"><a className="button button-primary" href="#work">VIEW WORK <Arrow /></a><a className="button" href="#contact">START A PROJECT</a></div>
+            <div className="hero-actions"><a className="button button-primary" href="#work">VIEW WORK <Arrow /></a><a className="button" href="/contact">START A PROJECT</a></div>
           </div>
           <div className="monitor-panel" aria-label="Featured media preview placeholder">
             <div className="monitor-screen"><span>REC ●</span><div className="focus-box"/><p>FEATURED FRAME<br/>MEDIA SLOT</p></div>
@@ -44,7 +46,7 @@ export default function Home() {
           {projects.map((project) => <article className="project-card" key={project.title}>
             <div className="card-top"><span>{project.index} / {project.title.toUpperCase()}</span><span>{project.status}</span></div>
             <div><p className="project-name">{project.name}</p><h3>{project.title}</h3><p>{project.description}</p></div>
-            <a href="#contact">{project.action} <Arrow /></a>
+            <a href="/contact">{project.action} <Arrow /></a>
           </article>)}
         </div>
       </section>
@@ -55,13 +57,13 @@ export default function Home() {
       </section>
 
       <section id="services" className="section shell services-section">
-        <div className="services-intro"><p className="eyebrow">04 / WORK WITH ME</p><h2>Commercial work<br/>without losing the voice.</h2><p>Selected partnerships that make sense for the audience, the project and the platform. Independent editorial analysis stays independent.</p><a className="button button-primary" href="#contact">START A BRIEF <Arrow /></a></div>
+        <div className="services-intro"><p className="eyebrow">04 / WORK WITH ME</p><h2>Commercial work<br/>without losing the voice.</h2><p>Selected partnerships that make sense for the audience, the project and the platform. Independent editorial analysis stays independent.</p><a className="button button-primary" href="/contact">START A BRIEF <Arrow /></a></div>
         <div className="service-list">{services.map(([index, title, description]) => <article key={index}><span>{index}</span><div><h3>{title}</h3><p>{description}</p></div><span>↗</span></article>)}</div>
       </section>
 
       <section className="section shell media-kit">
         <div><p className="eyebrow">05 / MEDIA KIT</p><h2>The numbers.<br/>The audience.<br/>The work.</h2></div>
-        <div className="media-card"><span>FRAMEBYNAVIN / MEDIA KIT</span><div className="media-metrics">{metrics.map((m) => <p key={m.label}><b>{m.value}</b>{m.label}</p>)}</div><a href="#contact">OPEN MEDIA KIT <Arrow /></a></div>
+        <div className="media-card"><span>FRAMEBYNAVIN / MEDIA KIT</span><div className="media-metrics">{metrics.map((m) => <p key={m.label}><b>{m.value}</b>{m.label}</p>)}</div><a href="/contact">REQUEST MEDIA KIT <Arrow /></a></div>
       </section>
 
       <section id="about" className="section shell about-section">
@@ -70,7 +72,7 @@ export default function Home() {
       </section>
 
       <section id="contact" className="cta shell">
-        <p className="eyebrow">07 / START A PROJECT</p><h2>Have something<br/>worth building?</h2><p>Brand, film, product or an unusual creative idea — send the brief.</p><a className="button button-primary" href="mailto:hello@framebynavin.com">LET&apos;S WORK <Arrow /></a>
+        <p className="eyebrow">07 / START A PROJECT</p><h2>Have something<br/>worth building?</h2><p>Brand, film, product or an unusual creative idea — send the brief.</p><a className="button button-primary" href="/contact">LET&apos;S WORK <Arrow /></a>
       </section>
 
       <footer className="site-footer shell"><span>FRAMEBYNAVIN / CREATIVE SYSTEM</span><div><a href="#top">TOP ↑</a><span>INSTAGRAM · YOUTUBE · X</span></div></footer>
