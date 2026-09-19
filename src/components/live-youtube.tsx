@@ -21,6 +21,7 @@ export function LiveYoutube() {
   const [items, setItems] = useState<YoutubeMediaItem[]>([]);
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,7 +44,7 @@ export function LiveYoutube() {
   }, []);
 
   useEffect(() => {
-    if (items.length < 2) return;
+    if (items.length < 2 || paused) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
@@ -53,7 +54,7 @@ export function LiveYoutube() {
     }, 6500);
 
     return () => window.clearInterval(id);
-  }, [items]);
+  }, [items, paused]);
 
   const activeItem = useMemo(() => items[active], [active, items]);
 
@@ -73,7 +74,13 @@ export function LiveYoutube() {
 
   return (
     <div className={`${styles.shell} live-media`}>
-      <div className={styles.stage}>
+      <div
+        className={styles.stage}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocusCapture={() => setPaused(true)}
+        onBlurCapture={() => setPaused(false)}
+      >
         {items.map((item, index) => (
           <a
             key={item.id}
@@ -91,6 +98,10 @@ export function LiveYoutube() {
             <span className={styles.play} aria-hidden="true">▶</span>
           </a>
         ))}
+
+        {!paused && items.length > 1 && <span key={active} className={styles.progress} aria-hidden="true" />}
+        <span className={styles.cornerA} aria-hidden="true" />
+        <span className={styles.cornerB} aria-hidden="true" />
 
         {items.length > 1 && (
           <div className={styles.controls} aria-label="Latest uploads carousel controls">
