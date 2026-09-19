@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import styles from "./mobile-menu.module.css";
 
@@ -27,10 +28,10 @@ export function MobileMenu() {
       {open ? (
         <div id="mobile-menu-panel" className={styles.panel} role="navigation" aria-label="Mobile navigation">
           {links.map(([label, href], index) => (
-            <a key={href} href={href} onClick={() => setOpen(false)}>
+            <Link key={href} href={href} onClick={() => setOpen(false)}>
               <span>0{index + 1}</span>
               {label}
-            </a>
+            </Link>
           ))}
         </div>
       ) : null}
