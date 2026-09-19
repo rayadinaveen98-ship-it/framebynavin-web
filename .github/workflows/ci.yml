@@ -101,6 +101,11 @@ jobs:
           test "$status" = "404"
           grep -q "THIS FRAME" /tmp/not-found.html
 
+      - name: Warm live media feed
+        run: |
+          curl -sS http://127.0.0.1:3000/api/youtube/latest > /tmp/youtube-latest.json || true
+          grep -q '"items"' /tmp/youtube-latest.json || true
+
       - name: Capture desktop and mobile renders
         run: |
           CHROME_BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
@@ -108,8 +113,8 @@ jobs:
           capture() {
             route="$1"
             name="$2"
-            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,5200 --screenshot="$name-desktop.png" "http://127.0.0.1:3000$route"
-            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,5200 --screenshot="$name-mobile.png" "http://127.0.0.1:3000$route"
+            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --virtual-time-budget=5000 --window-size=1440,5200 --screenshot="$name-desktop.png" "http://127.0.0.1:3000$route"
+            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --virtual-time-budget=5000 --window-size=390,5200 --screenshot="$name-mobile.png" "http://127.0.0.1:3000$route"
           }
           capture / homepage
           capture /work work
