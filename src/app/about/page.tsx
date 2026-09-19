@@ -28,10 +28,10 @@ export default function AboutPage() {
           <div className={portraitStyles.portrait} aria-label="Illustrated portrait of Navin">
             <span aria-hidden="true">NAVIN</span>
             <Image
-              src="/brand/navin-standing.webp"
-              alt="Illustrated portrait of Navin standing with folded arms"
-              width={323}
-              height={520}
+              src="/brand/navin-thinking.webp"
+              alt="Illustrated portrait of Navin seated in a thoughtful pose"
+              width={315}
+              height={420}
               priority
             />
           </div>
