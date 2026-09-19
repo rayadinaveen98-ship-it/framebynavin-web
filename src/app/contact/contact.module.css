@@ -92,6 +92,7 @@
 }
 
 .form {
+  position: relative;
   border: 1px solid var(--line);
   background: var(--surface);
   padding: 28px;
@@ -107,6 +108,10 @@
   font-size: 9px;
   letter-spacing: .13em;
   text-transform: uppercase;
+}
+
+.formTop span:last-child {
+  color: var(--online);
 }
 
 .grid {
@@ -165,6 +170,17 @@
   border-color: var(--accent);
 }
 
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .submitRow {
   grid-column: 1 / -1;
   display: flex;
@@ -193,6 +209,22 @@
   font-weight: 700;
   letter-spacing: .1em;
   cursor: not-allowed;
+  transition: .2s ease;
+}
+
+.submit:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #08090a;
+  cursor: pointer;
+}
+
+.submit:not(:disabled):hover,
+.submit:not(:disabled):focus-visible {
+  background: #ff5a50;
+  border-color: #ff5a50;
+  transform: translateY(-1px);
+  outline: none;
 }
 
 .footer {
