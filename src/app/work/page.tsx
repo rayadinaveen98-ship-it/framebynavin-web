@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FeaturedReels } from "@/components/featured-reels";
 import { SiteHeader } from "@/components/site-header";
 import { YoutubeWorkGrid } from "@/components/youtube-work-grid";
 import { projects, selectedWork } from "@/content/site";
@@ -19,15 +20,19 @@ export default function WorkPage() {
       <section className={styles.hero}>
         <div className={styles.index}>02 / WORK</div>
         <div className={styles.heroBody}>
-          <p className="eyebrow">PUBLISHED WORK / LIVE ARCHIVE</p>
+          <p className="eyebrow">PUBLISHED WORK / LIVE + CURATED</p>
           <h1>FRAMES THAT<br/><em>STAY WITH YOU.</em></h1>
           <p className={styles.lead}>
-            Cinema is the active center of FrameByNavin today. The archive below updates from the public YouTube channel, while selected performance proof is kept as a dated snapshot.
+            Cinema is the active center of FrameByNavin today. YouTube updates automatically from the public channel; Instagram below is a creator-selected set of real Reels. Performance proof stays dated and explicit.
           </p>
         </div>
       </section>
 
       <YoutubeWorkGrid />
+
+      <div className="shell">
+        <FeaturedReels />
+      </div>
 
       <section className={styles.section}>
         <div className={styles.heading}>
