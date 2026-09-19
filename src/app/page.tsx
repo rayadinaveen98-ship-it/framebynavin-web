@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { metrics, projects, selectedWork, services } from "@/content/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 function Arrow() {
   return <span aria-hidden="true">↗</span>;
