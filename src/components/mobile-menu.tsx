@@ -5,9 +5,9 @@ import { useState } from "react";
 import styles from "./mobile-menu.module.css";
 
 const links = [
-  ["Work", "#work"],
-  ["Services", "#services"],
-  ["About", "#about"],
+  ["Work", "/work"],
+  ["Services", "/services"],
+  ["About", "/about"],
   ["Contact", "/contact"],
 ] as const;
 
