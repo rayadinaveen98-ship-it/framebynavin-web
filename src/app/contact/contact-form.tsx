@@ -4,49 +4,59 @@ import { FormEvent, useState } from "react";
 import styles from "./contact.module.css";
 
 type ContactFormProps = {
-  enabled: boolean;
+  contactEmail: string;
 };
 
-type Status = "idle" | "sending" | "success" | "error";
+type Status = "idle" | "opening" | "ready";
 
-export function ContactForm({ enabled }: ContactFormProps) {
+function value(data: FormData, key: string) {
+  return String(data.get(key) ?? "").trim();
+}
+
+export function ContactForm({ contactEmail }: ContactFormProps) {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!enabled || status === "sending") return;
+    if (status === "opening") return;
 
-    setStatus("sending");
-    setMessage("Sending project brief…");
+    const data = new FormData(event.currentTarget);
+    if (value(data, "website")) return;
 
-    const form = event.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    setStatus("opening");
+    setMessage("Preparing your email draft…");
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+    const company = value(data, "company");
+    const type = value(data, "type");
+    const subject = `FrameByNavin project brief — ${company} / ${type}`;
+    const body = [
+      "FRAMEBYNAVIN — PROJECT BRIEF",
+      "",
+      `Name: ${value(data, "name")}`,
+      `Email: ${value(data, "email")}`,
+      `Company / Brand / Film / Product: ${company}`,
+      `Collaboration type: ${type}`,
+      `Budget range: ${value(data, "budget")}`,
+      `Desired timeline: ${value(data, "timeline")}`,
+      `Expected deliverables: ${value(data, "deliverables")}`,
+      "",
+      "Project details:",
+      value(data, "message"),
+      "",
+      "Sent from the FrameByNavin website project-intake form.",
+    ].join("\n");
 
-      const result = (await response.json()) as { ok?: boolean; message?: string };
-      if (!response.ok || !result.ok) {
-        throw new Error(result.message || "The brief could not be sent.");
-      }
+    const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
 
-      form.reset();
-      setStatus("success");
-      setMessage("Brief received. Thank you — the details are safely in the project intake system.");
-    } catch (error) {
-      setStatus("error");
-      setMessage(error instanceof Error ? error.message : "The brief could not be sent. Please try again.");
-    }
+    setStatus("ready");
+    setMessage("Email draft opened. Review it in your mail app and press Send to complete the enquiry.");
   }
 
   return (
     <form className={styles.form} aria-label="Collaboration brief" onSubmit={handleSubmit}>
-      <div className={styles.formTop}><span>PROJECT INTAKE / V1</span><span>{enabled ? "ONLINE" : "STAGING"}</span></div>
+      <div className={styles.formTop}><span>PROJECT INTAKE / V1</span><span>EMAIL MODE</span></div>
       <div className={styles.grid}>
         <div className={styles.field}>
           <label htmlFor="name">Your name</label>
@@ -103,12 +113,10 @@ export function ContactForm({ enabled }: ContactFormProps) {
 
         <div className={styles.submitRow}>
           <p aria-live="polite">
-            {message || (enabled
-              ? "Your brief is delivered through the private project-intake endpoint."
-              : "The form is built and validated; submission activates automatically when the secure delivery webhook is configured.")}
+            {message || <>Your details stay in your browser until you open the email draft. Prefer direct email? <a className={styles.directEmail} href={`mailto:${contactEmail}`}>{contactEmail}</a></>}
           </p>
-          <button className={styles.submit} type="submit" disabled={!enabled || status === "sending"}>
-            {!enabled ? "DELIVERY SETUP PENDING" : status === "sending" ? "SENDING…" : status === "success" ? "BRIEF SENT ✓" : "SEND BRIEF ↗"}
+          <button className={styles.submit} type="submit" disabled={status === "opening"}>
+            {status === "opening" ? "OPENING…" : status === "ready" ? "OPEN EMAIL AGAIN ↗" : "OPEN EMAIL DRAFT ↗"}
           </button>
         </div>
       </div>
