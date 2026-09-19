@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { siteConfig } from "@/lib/site-config";
 import { ContactForm } from "./contact-form";
 import styles from "./contact.module.css";
 
@@ -10,8 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const contactEnabled = Boolean(process.env.CONTACT_WEBHOOK_URL);
-
   return (
     <main className={styles.page}>
       <header className={styles.header}>
@@ -32,10 +31,11 @@ export default function ContactPage() {
             <p>Best fit <span>Cinema, entertainment, creator tools, storytelling and aligned brands.</span></p>
             <p>Editorial line <span>Paid promotion and independent editorial opinion stay separate.</span></p>
             <p>Pricing <span>Scoped per project rather than fixed publicly on the website.</span></p>
+            <p>Direct email <span><a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a></span></p>
           </div>
         </div>
 
-        <ContactForm enabled={contactEnabled} />
+        <ContactForm contactEmail={siteConfig.contactEmail} />
       </section>
 
       <footer className={`${styles.shell} ${styles.footer}`}>
