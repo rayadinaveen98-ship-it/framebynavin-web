@@ -18,7 +18,7 @@ export const siteConfig = {
   url: resolveSiteUrl(),
   locale: "en_IN",
   creator: "Navin",
-  contactEmail: "rayadinaveen98@gmail.com",
+  contactEmail: "framebynavin@gmail.com",
   keywords: [
     "FrameByNavin",
     "cinema analysis",
