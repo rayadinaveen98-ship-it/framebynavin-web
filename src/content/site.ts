@@ -56,6 +56,29 @@ export const selectedWork = [
   },
 ] as const;
 
+export const featuredReels = [
+  {
+    index: "01",
+    shortcode: "DcoFyP4zrxR",
+    href: "https://www.instagram.com/reel/DcoFyP4zrxR/",
+  },
+  {
+    index: "02",
+    shortcode: "DbGDCQWBgYG",
+    href: "https://www.instagram.com/reel/DbGDCQWBgYG/",
+  },
+  {
+    index: "03",
+    shortcode: "DdWrtt_TAp4",
+    href: "https://www.instagram.com/reel/DdWrtt_TAp4/",
+  },
+  {
+    index: "04",
+    shortcode: "DdTUDYfTYPC",
+    href: "https://www.instagram.com/reel/DdTUDYfTYPC/",
+  },
+] as const;
+
 export const services = [
   ["01", "Brand Collaborations", "Creator-led campaigns designed to fit naturally into the audience and content."],
   ["02", "Film & Entertainment Promotions", "Campaign support for films, trailers, music and entertainment releases."],
